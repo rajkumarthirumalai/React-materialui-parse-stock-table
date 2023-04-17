@@ -50,11 +50,15 @@ function ExtensionData() {
       let resultantArray = res.map((val, i) => {
         const person = new Object();
         if (val.get("domainName") == "zerodha") {
-          console.log(val.get("ZerodhapositionsTab1"),"this is psotitonTab1");
           let arr3 = JSON.parse(val.get("ZerodhapositionsTab1"));
           arr3.pop();
-          console.log(arr3, "this is ", i);
-          let rv = arr3.map((e) => parseFloat(e["P&L"].replace(/,/g, "")));
+
+          let rv = arr3.map((e) => {
+            console.log(e);
+            console.log(e["P&L"],"this uis");
+            return parseFloat(e["P&L"].replace(/,/g, ""))
+          }
+          );
           person.daytotalPL = rv.reduce((a, b) => {
             if (a != NaN) {
               return a + b;
