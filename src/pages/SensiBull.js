@@ -57,6 +57,8 @@ function SensiBull() {
       }),
       []
     );
+
+      
   let dump = useParams();
   async function ParseCall() {
     console.log("ParseCall");
@@ -133,6 +135,9 @@ function SensiBull() {
       })
       .catch(async () => {});
   }
+
+
+
   const signout = () => {
     navigate(`/sensibullview`, { replace: true });
   };

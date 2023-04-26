@@ -16,6 +16,7 @@ import IndividualUser from './pages/IndividualUser';
 import SensiBull from './pages/SensiBull';
 import SensiBullMain from './pages/Sensibullmain';
 import Stylingu from './pages/Stylingu';
+import SensileAllData from './pages/SensileAllData';
 // Your Parse initialization configuration goes here
 const PARSE_APPLICATION_ID = '123';
 // const PARSE_HOST_URL = 'http://localhost:1337/parse';
@@ -47,6 +48,7 @@ export default function App() {
             <Route path="/admin" element={<LoginPage />} />
             <Route path="/sensibullview" element={<SensiBullMain />} />
             <Route path="/view" element={< Stylingu/>} />
+            <Route path="/all" element={<SensileAllData/>} />
             <Route
               path="/users/:id"
               element={

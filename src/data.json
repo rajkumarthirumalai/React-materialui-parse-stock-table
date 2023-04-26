@@ -1,0 +1,576 @@
+[
+    {
+        "Strike": "18750",
+        "CallLTP": "0.75  \n+7%",
+        "PutLTP": "-",
+        "createdAt": "2023-04-25T04:34:48.613Z",
+        "ObjId": "RPuLQOaPGa"
+    },
+    {
+        "Strike": "16900",
+        "CallLTP": "840.60  \n-2%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:34:48.496Z",
+        "ObjId": "gs3Th5o9jg"
+    },
+    {
+        "Strike": "16800",
+        "CallLTP": "948.00  \n-1%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:34:48.492Z",
+        "ObjId": "Ch0rjIGaID"
+    },
+    {
+        "Strike": "17000",
+        "CallLTP": "758.20  \n0%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:34:48.499Z",
+        "ObjId": "N3Aebq6Hfr"
+    },
+    {
+        "Strike": "16950",
+        "CallLTP": "800.00  \n-2%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:34:48.498Z",
+        "ObjId": "yckB1G25bl"
+    },
+    {
+        "Strike": "16750",
+        "CallLTP": "1002.65  \n+12%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:34:48.489Z",
+        "ObjId": "fffZsXZEPB"
+    },
+    {
+        "Strike": "16850",
+        "CallLTP": "903.25  \n+5%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:34:48.493Z",
+        "ObjId": "HgmcwAMbSk"
+    },
+    {
+        "Strike": "17200",
+        "CallLTP": "556.50  \n-1%",
+        "PutLTP": "0.0002",
+        "createdAt": "2023-04-25T04:34:48.537Z",
+        "ObjId": "8GZ8O8jYCI"
+    },
+    {
+        "Strike": "17150",
+        "CallLTP": "602.20  \n-2%",
+        "PutLTP": "0.0002",
+        "createdAt": "2023-04-25T04:34:48.535Z",
+        "ObjId": "6pAbkRM7ug"
+    },
+    {
+        "Strike": "17250",
+        "CallLTP": "507.00  \n-1%",
+        "PutLTP": "0.0002",
+        "createdAt": "2023-04-25T04:34:48.540Z",
+        "ObjId": "NSgfdyiyqs"
+    },
+    {
+        "Strike": "17100",
+        "CallLTP": "656.65  \n-1%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:34:48.533Z",
+        "ObjId": "pkmSA3EK5B"
+    },
+    {
+        "Strike": "17350",
+        "CallLTP": "406.50  \n-2%",
+        "PutLTP": "0.0003",
+        "createdAt": "2023-04-25T04:34:48.543Z",
+        "ObjId": "pnV9UmGjL5"
+    },
+    {
+        "Strike": "17050",
+        "CallLTP": "701.10  \n-2%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:34:48.501Z",
+        "ObjId": "raGyfgKpa2"
+    },
+    {
+        "Strike": "17450",
+        "CallLTP": "311.85  \n-2%",
+        "PutLTP": "0.0006",
+        "createdAt": "2023-04-25T04:34:48.547Z",
+        "ObjId": "VbUkGLU7HA"
+    },
+    {
+        "Strike": "17500",
+        "CallLTP": "263.45  \n-2%",
+        "PutLTP": "0.0008",
+        "createdAt": "2023-04-25T04:34:48.550Z",
+        "ObjId": "34peMWJdTw"
+    },
+    {
+        "Strike": "17550",
+        "CallLTP": "216.85  \n-3%",
+        "PutLTP": "0.0011",
+        "createdAt": "2023-04-25T04:34:48.556Z",
+        "ObjId": "7RHmsMYh8b"
+    },
+    {
+        "Strike": "17300",
+        "CallLTP": "458.30  \n-2%",
+        "PutLTP": "0.0003",
+        "createdAt": "2023-04-25T04:34:48.541Z",
+        "ObjId": "FcIjLQqGT4"
+    },
+    {
+        "Strike": "17400",
+        "CallLTP": "360.75  \n-2%",
+        "PutLTP": "0.0004",
+        "createdAt": "2023-04-25T04:34:48.545Z",
+        "ObjId": "Rbb7DoYeEf"
+    },
+    {
+        "Strike": "17700",
+        "CallLTP": "91.85  \n-6%",
+        "PutLTP": "0.0025",
+        "createdAt": "2023-04-25T04:34:48.562Z",
+        "ObjId": "UUafl8F9Z1"
+    },
+    {
+        "Strike": "17750",
+        "CallLTP": "61.00  \n-8%",
+        "PutLTP": "0.0027",
+        "createdAt": "2023-04-25T04:34:48.565Z",
+        "ObjId": "pkLM0XRpYv"
+    },
+    {
+        "Strike": "17600",
+        "CallLTP": "171.50  \n-3%",
+        "PutLTP": "0.0015",
+        "createdAt": "2023-04-25T04:34:48.558Z",
+        "ObjId": "VSY8XXk9yC"
+    },
+    {
+        "Strike": "17900",
+        "CallLTP": "11.55  \n-12%",
+        "PutLTP": "0.0017",
+        "createdAt": "2023-04-25T04:34:48.573Z",
+        "ObjId": "ApSGXkbSxU"
+    },
+    {
+        "Strike": "17650",
+        "CallLTP": "129.60  \n-4%",
+        "PutLTP": "0.002",
+        "createdAt": "2023-04-25T04:34:48.560Z",
+        "ObjId": "I4kS4KAOJu"
+    },
+    {
+        "Strike": "18000",
+        "CallLTP": "3.85  \n-6%",
+        "PutLTP": "0.0008",
+        "createdAt": "2023-04-25T04:34:48.578Z",
+        "ObjId": "f3mCNGiPFv"
+    },
+    {
+        "Strike": "18050",
+        "CallLTP": "2.60  \n0%",
+        "PutLTP": "0.0005",
+        "createdAt": "2023-04-25T04:34:48.580Z",
+        "ObjId": "0K038wjIje"
+    },
+    {
+        "Strike": "17850",
+        "CallLTP": "21.40  \n-11%",
+        "PutLTP": "0.0023",
+        "createdAt": "2023-04-25T04:34:48.569Z",
+        "ObjId": "K16VyPCDTl"
+    },
+    {
+        "Strike": "17800",
+        "CallLTP": "37.55  \n-10%",
+        "PutLTP": "0.0027",
+        "createdAt": "2023-04-25T04:34:48.567Z",
+        "ObjId": "vOLGCOxZ3S"
+    },
+    {
+        "Strike": "18150",
+        "CallLTP": "1.50  \n0%",
+        "PutLTP": "0.0003",
+        "createdAt": "2023-04-25T04:34:48.585Z",
+        "ObjId": "ESvDqsIy1j"
+    },
+    {
+        "Strike": "17950",
+        "CallLTP": "6.10  \n-10%",
+        "PutLTP": "0.0011",
+        "createdAt": "2023-04-25T04:34:48.575Z",
+        "ObjId": "QqX8g7oLpn"
+    },
+    {
+        "Strike": "18250",
+        "CallLTP": "1.10  \n+5%",
+        "PutLTP": "0.0002",
+        "createdAt": "2023-04-25T04:34:48.589Z",
+        "ObjId": "j5MAneWLn5"
+    },
+    {
+        "Strike": "18100",
+        "CallLTP": "1.95  \n-3%",
+        "PutLTP": "0.0004",
+        "createdAt": "2023-04-25T04:34:48.582Z",
+        "ObjId": "97ZpziG6fO"
+    },
+    {
+        "Strike": "18400",
+        "CallLTP": "0.90  \n0%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:34:48.597Z",
+        "ObjId": "bbKcP78UTU"
+    },
+    {
+        "Strike": "18450",
+        "CallLTP": "0.90  \n0%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:34:48.599Z",
+        "ObjId": "lc2FH9HJTm"
+    },
+    {
+        "Strike": "18200",
+        "CallLTP": "1.25  \n-7%",
+        "PutLTP": "0.0002",
+        "createdAt": "2023-04-25T04:34:48.587Z",
+        "ObjId": "i3GejQZCdi"
+    },
+    {
+        "Strike": "18700",
+        "CallLTP": "0.75  \n+7%",
+        "PutLTP": "-",
+        "createdAt": "2023-04-25T04:34:48.611Z",
+        "ObjId": "A0M9yhZuAx"
+    },
+    {
+        "Strike": "18650",
+        "CallLTP": "0.80  \n+7%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:34:48.607Z",
+        "ObjId": "CeFLKKgciS"
+    },
+    {
+        "Strike": "18500",
+        "CallLTP": "0.95  \n+6%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:34:48.601Z",
+        "ObjId": "TUXiujGyq7"
+    },
+    {
+        "Strike": "18550",
+        "CallLTP": "0.85  \n-6%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:34:48.603Z",
+        "ObjId": "QGBOnbBToX"
+    },
+    {
+        "Strike": "18300",
+        "CallLTP": "1.05  \n+5%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:34:48.593Z",
+        "ObjId": "yWE55LYslP"
+    },
+    {
+        "Strike": "18350",
+        "CallLTP": "0.90  \n0%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:34:48.595Z",
+        "ObjId": "lrSB01rFAm"
+    },
+    {
+        "Strike": "18600",
+        "CallLTP": "0.80  \n0%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:34:48.605Z",
+        "ObjId": "UQSWC58m77"
+    },
+    {
+        "Strike": "16750",
+        "CallLTP": "1002.65  \n+12%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.830Z",
+        "ObjId": "6TBLd4PiDD"
+    },
+    {
+        "Strike": "16800",
+        "CallLTP": "948.00  \n-1%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.852Z",
+        "ObjId": "frvDvjYF13"
+    },
+    {
+        "Strike": "16850",
+        "CallLTP": "903.25  \n+5%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.855Z",
+        "ObjId": "KdUqp5el4S"
+    },
+    {
+        "Strike": "16900",
+        "CallLTP": "840.60  \n-2%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.857Z",
+        "ObjId": "qEPVQ8aidI"
+    },
+    {
+        "Strike": "16950",
+        "CallLTP": "800.00  \n-2%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.859Z",
+        "ObjId": "ieeYHyRtXw"
+    },
+    {
+        "Strike": "17050",
+        "CallLTP": "701.10  \n-2%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.863Z",
+        "ObjId": "O9QIzxpIyD"
+    },
+    {
+        "Strike": "17000",
+        "CallLTP": "758.20  \n0%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.861Z",
+        "ObjId": "iIdrkP4zeg"
+    },
+    {
+        "Strike": "17100",
+        "CallLTP": "658.90  \n0%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.866Z",
+        "ObjId": "gMc7b3ABcW"
+    },
+    {
+        "Strike": "17150",
+        "CallLTP": "602.20  \n-2%",
+        "PutLTP": "0.0002",
+        "createdAt": "2023-04-25T04:35:02.868Z",
+        "ObjId": "Qgm1cEudDH"
+    },
+    {
+        "Strike": "17200",
+        "CallLTP": "558.55  \n-1%",
+        "PutLTP": "0.0002",
+        "createdAt": "2023-04-25T04:35:02.870Z",
+        "ObjId": "DMylODa6fg"
+    },
+    {
+        "Strike": "17250",
+        "CallLTP": "510.10  \n-1%",
+        "PutLTP": "0.0002",
+        "createdAt": "2023-04-25T04:35:02.872Z",
+        "ObjId": "KgahZhADrM"
+    },
+    {
+        "Strike": "17300",
+        "CallLTP": "458.30  \n-2%",
+        "PutLTP": "0.0003",
+        "createdAt": "2023-04-25T04:35:02.874Z",
+        "ObjId": "ciGObYT8MZ"
+    },
+    {
+        "Strike": "17350",
+        "CallLTP": "406.50  \n-2%",
+        "PutLTP": "0.0003",
+        "createdAt": "2023-04-25T04:35:02.877Z",
+        "ObjId": "2bSvP37HxV"
+    },
+    {
+        "Strike": "17400",
+        "CallLTP": "360.60  \n-2%",
+        "PutLTP": "0.0004",
+        "createdAt": "2023-04-25T04:35:02.879Z",
+        "ObjId": "g2aaSL6AYM"
+    },
+    {
+        "Strike": "17450",
+        "CallLTP": "310.70  \n-2%",
+        "PutLTP": "0.0006",
+        "createdAt": "2023-04-25T04:35:02.882Z",
+        "ObjId": "dgE9BBBzAe"
+    },
+    {
+        "Strike": "17500",
+        "CallLTP": "263.10  \n-2%",
+        "PutLTP": "0.0008",
+        "createdAt": "2023-04-25T04:35:02.884Z",
+        "ObjId": "Hm6XTFwEZv"
+    },
+    {
+        "Strike": "17550",
+        "CallLTP": "215.80  \n-3%",
+        "PutLTP": "0.0011",
+        "createdAt": "2023-04-25T04:35:02.886Z",
+        "ObjId": "USrZZUtHlq"
+    },
+    {
+        "Strike": "17600",
+        "CallLTP": "170.30  \n-4%",
+        "PutLTP": "0.0015",
+        "createdAt": "2023-04-25T04:35:02.887Z",
+        "ObjId": "kf6agkeckk"
+    },
+    {
+        "Strike": "17650",
+        "CallLTP": "128.90  \n-5%",
+        "PutLTP": "0.002",
+        "createdAt": "2023-04-25T04:35:02.890Z",
+        "ObjId": "1jQB2secRw"
+    },
+    {
+        "Strike": "17700",
+        "CallLTP": "91.35  \n-6%",
+        "PutLTP": "0.0025",
+        "createdAt": "2023-04-25T04:35:02.892Z",
+        "ObjId": "e41i7LzC00"
+    },
+    {
+        "Strike": "17750",
+        "CallLTP": "60.70  \n-9%",
+        "PutLTP": "0.0027",
+        "createdAt": "2023-04-25T04:35:02.894Z",
+        "ObjId": "pWg9cTAAzi"
+    },
+    {
+        "Strike": "17800",
+        "CallLTP": "37.25  \n-11%",
+        "PutLTP": "0.0027",
+        "createdAt": "2023-04-25T04:35:02.897Z",
+        "ObjId": "AmazkAUIOm"
+    },
+    {
+        "Strike": "17850",
+        "CallLTP": "21.20  \n-12%",
+        "PutLTP": "0.0023",
+        "createdAt": "2023-04-25T04:35:02.899Z",
+        "ObjId": "QhQLgJMi2L"
+    },
+    {
+        "Strike": "17900",
+        "CallLTP": "11.35  \n-13%",
+        "PutLTP": "0.0017",
+        "createdAt": "2023-04-25T04:35:02.901Z",
+        "ObjId": "sYk4fuWEjy"
+    },
+    {
+        "Strike": "17950",
+        "CallLTP": "6.05  \n-10%",
+        "PutLTP": "0.0011",
+        "createdAt": "2023-04-25T04:35:02.904Z",
+        "ObjId": "5VJmG7DLCI"
+    },
+    {
+        "Strike": "18000",
+        "CallLTP": "3.90  \n-5%",
+        "PutLTP": "0.0008",
+        "createdAt": "2023-04-25T04:35:02.906Z",
+        "ObjId": "Jso2B9oXbw"
+    },
+    {
+        "Strike": "18050",
+        "CallLTP": "2.60  \n0%",
+        "PutLTP": "0.0005",
+        "createdAt": "2023-04-25T04:35:02.908Z",
+        "ObjId": "aRepqHeQT2"
+    },
+    {
+        "Strike": "18100",
+        "CallLTP": "1.95  \n-3%",
+        "PutLTP": "0.0004",
+        "createdAt": "2023-04-25T04:35:02.911Z",
+        "ObjId": "2fpQu0oWoq"
+    },
+    {
+        "Strike": "18150",
+        "CallLTP": "1.50  \n0%",
+        "PutLTP": "0.0003",
+        "createdAt": "2023-04-25T04:35:02.913Z",
+        "ObjId": "dZl3dM0kDU"
+    },
+    {
+        "Strike": "18200",
+        "CallLTP": "1.30  \n-4%",
+        "PutLTP": "0.0002",
+        "createdAt": "2023-04-25T04:35:02.915Z",
+        "ObjId": "oFQUzHWtH5"
+    },
+    {
+        "Strike": "18250",
+        "CallLTP": "1.10  \n+5%",
+        "PutLTP": "0.0002",
+        "createdAt": "2023-04-25T04:35:02.917Z",
+        "ObjId": "g9Da4vBECI"
+    },
+    {
+        "Strike": "18300",
+        "CallLTP": "1.05  \n+5%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.919Z",
+        "ObjId": "fQaZScJCCb"
+    },
+    {
+        "Strike": "18350",
+        "CallLTP": "0.90  \n0%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.921Z",
+        "ObjId": "hCNOaFyKo0"
+    },
+    {
+        "Strike": "18400",
+        "CallLTP": "0.90  \n0%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.923Z",
+        "ObjId": "amr4132AqQ"
+    },
+    {
+        "Strike": "18450",
+        "CallLTP": "0.90  \n0%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.925Z",
+        "ObjId": "9VA2nHsjS7"
+    },
+    {
+        "Strike": "18500",
+        "CallLTP": "1.00  \n+11%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.927Z",
+        "ObjId": "MEqHyBBX2T"
+    },
+    {
+        "Strike": "18550",
+        "CallLTP": "0.85  \n-6%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.930Z",
+        "ObjId": "WwdNi1NbLR"
+    },
+    {
+        "Strike": "18600",
+        "CallLTP": "0.80  \n0%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.932Z",
+        "ObjId": "NwzkFISsMo"
+    },
+    {
+        "Strike": "18700",
+        "CallLTP": "0.80  \n+14%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.937Z",
+        "ObjId": "aOE7DaK18q"
+    },
+    {
+        "Strike": "18650",
+        "CallLTP": "0.85  \n+13%",
+        "PutLTP": "0.0001",
+        "createdAt": "2023-04-25T04:35:02.935Z",
+        "ObjId": "x8ny5dwYxJ"
+    },
+    {
+        "Strike": "18750",
+        "CallLTP": "0.80  \n+14%",
+        "PutLTP": "-",
+        "createdAt": "2023-04-25T04:35:02.940Z",
+        "ObjId": "HeuMHlfps8"
+    }
+]

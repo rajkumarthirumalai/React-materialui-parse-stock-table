@@ -75,6 +75,8 @@ function SensiBullMain() {
       []
     );
 
+
+
   async function ParseCall() {
     console.log("ParseCall");
 
@@ -95,6 +97,10 @@ function SensiBullMain() {
       setTheArrayOfvalues(resultantArray);
     });
   }
+
+
+
+  
   const StyledList = styled(List)(({ theme }) => ({
     backgroundColor: "#f7f7f7",
     boxShadow: `0px 2px 6px 0px rgba(0,0,0,0.7)`,
@@ -176,6 +182,7 @@ function SensiBullMain() {
                   </Grid>
                 </StyledListItem>
               ))}
+              
             </StyledList>
           </Grid>
         </Grid>
