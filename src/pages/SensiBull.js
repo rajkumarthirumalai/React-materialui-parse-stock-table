@@ -32,6 +32,7 @@ import Scrollbar from "src/components/scrollbar/Scrollbar";
 import Iconify from "src/components/iconify/Iconify";
 import UserHeader from "src/layouts/dashboard/header/UserHeader";
 import { Margin } from "@mui/icons-material";
+import { TimeInput, TimePicker } from "@mui/lab";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -45,6 +46,11 @@ function SensiBull() {
   const navigate = useNavigate();
   const [theArray, setTheArray] = useState([]);
   const [theArrayOfvalues, setTheArrayOfvalues] = useState([]);
+  const [selectedTime, setSelectedTime] = useState(new Date()); // set initial time value here
+
+  const handleTimeChange = (time) => {
+    setSelectedTime(time);
+  };
   useEffect(() => {
     console.log("use");
     ParseCall();
@@ -63,7 +69,7 @@ function SensiBull() {
   async function ParseCall() {
     console.log("ParseCall");
 
-    const qq = new Parse.Query("Nifty");
+    const qq = new Parse.Query("aprilNifty");
     let valIs = `${dump.id}`;
     qq.equalTo("Strike", valIs);
     qq.limit(1000);
@@ -100,7 +106,7 @@ function SensiBull() {
           console.log("it is not found");
 
           console.log("this works 1");
-          const qq2 = new Parse.Query("bankNifty");
+          const qq2 = new Parse.Query("aprilbankNifty");
           let valIs = `${dump.id}`;
           qq2.equalTo("Strike", valIs);
           qq2.limit(1000);
@@ -176,6 +182,7 @@ function SensiBull() {
             >
               back
             </Button>
+          
           </Grid>
         </div>
         {/* </Typography> */}

@@ -48,14 +48,13 @@ function ExtensionData() {
     query2.descending("createdAt");
     query2.find().then((res) => {
       let resultantArray = res.map((val, i) => {
+        console.log(val.get("userId"));
         const person = new Object();
         if (val.get("domainName") == "zerodha") {
           let arr3 = JSON.parse(val.get("ZerodhapositionsTab1"));
           arr3.pop();
 
           let rv = arr3.map((e) => {
-            console.log(e);
-            console.log(e["P&L"],"this uis");
             return parseFloat(e["P&L"].replace(/,/g, ""))
           }
           );
@@ -80,6 +79,7 @@ function ExtensionData() {
           let temp = JSON.parse(val.get("ZerodhapositionsTab1"));
           temp.pop();
           person.positionsTab1 = temp;
+          // console.log(person,"---");
           return person;
         } else if (val.get("domainName") == "finvasia") {
           let arr3 = val.get("ShoonyaPositionBook");
@@ -149,7 +149,7 @@ function ExtensionData() {
           person.OrderBook = val.get("ShoonyaOrderBook");
           person.Limits = val.get("ShoonyaLimits");
           person.PositionBook = val.get("ShoonyaPositionBook");
-          console.log("the finvaisia array", person);
+          // console.log(person,"---");
           return person;
         } else if (val.get("domainName") == "aliceblueonline") {
           let arr3 = val.get("AlicePosition");
@@ -169,6 +169,7 @@ function ExtensionData() {
           person.AliceCurVal = val.get("AliceCurVal");
           person.AliceOverallPL = val.get("AliceOverallPL");
           person.AliceDayPL = val.get("AliceDayPL");
+          // console.log(person,"---");
           return person;
         } else if (val.get("domainName") == "sensibull") {
           person.id = val.id;
@@ -180,11 +181,12 @@ function ExtensionData() {
           person.weburl = val.get("weburl");
           person.sensiNifty = val.get("niftyArray");
           person.sensiBank = val.get("bankniftyArray");
+          // console.log(person,"---");
           return person;
         }
       });
+      console.log(resultantArray,"resultantArrayresultantArray");
       let newArray = groupBy(resultantArray, "userId");
-
       setTheArray(Object.keys(newArray));
       setTheArrayOfvalues(Object.values(newArray));
     });
@@ -205,8 +207,6 @@ function ExtensionData() {
   }
   console.log(theArray, theArrayOfvalues, "the array ");
   const handleClick = (url) => {
-    console.log("workss");
-    console.log(`/users/${url}`);
     navigate(`/users/${url}`, { replace: true });
   };
   return (

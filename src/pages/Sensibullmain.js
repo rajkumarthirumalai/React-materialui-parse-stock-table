@@ -1,39 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Parse from "parse/dist/parse.min.js";
 import { useNavigate } from "react-router-dom";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import {
-  AppWidgetSummary,
-  AppWidgetSummary2,
-} from "src/sections/@dashboard/app";
-import {
-  Card,
-  CardHeader,
-  Divider,
-  Stack,
-  Link,
-  Button,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-} from "@mui/material";
-import Scrollbar from "src/components/scrollbar/Scrollbar";
 import Iconify from "src/components/iconify/Iconify";
 import UserHeader from "src/layouts/dashboard/header/UserHeader";
 import { List, ListItem, ListItemText } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import dayjs from 'dayjs';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
+import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -62,9 +43,15 @@ function SensiBullMain() {
   const navigate = useNavigate();
   const [theArray, setTheArray] = useState([]);
   const [theArrayOfvalues, setTheArrayOfvalues] = useState([]);
+  const [value, setValue] = useState([]);
+  const [selectedTime, setSelectedTime] = useState(new Date()); // set initial time value here
+
+  const handleTimeChange = (time) => {
+    setSelectedTime(time);
+  };
   useEffect(() => {
     console.log("use");
-    ParseCall();
+    // ParseCall();
   }, []);
   const groupBy = (items, key) =>
     items.reduce(
@@ -75,12 +62,10 @@ function SensiBullMain() {
       []
     );
 
-
-
   async function ParseCall() {
     console.log("ParseCall");
 
-    const qq = new Parse.Query("Nifty");
+    const qq = new Parse.Query("aprilNifty");
     qq.descending("createdAt");
     qq.distinct("Strike").then((r) => {
       console.log(r, "r is");
@@ -88,7 +73,7 @@ function SensiBullMain() {
       let resultantArray = r?.filter((e) => parseInt(e) < 30000);
       setTheArray(resultantArray);
     });
-    const qq2 = new Parse.Query("bankNifty");
+    const qq2 = new Parse.Query("aprilbankNifty");
     qq2.descending("createdAt");
     qq2.distinct("Strike").then((r) => {
       console.log(r, "r is");
@@ -98,9 +83,6 @@ function SensiBullMain() {
     });
   }
 
-
-
-  
   const StyledList = styled(List)(({ theme }) => ({
     backgroundColor: "#f7f7f7",
     boxShadow: `0px 2px 6px 0px rgba(0,0,0,0.7)`,
@@ -123,11 +105,20 @@ function SensiBullMain() {
       <UserHeader />
       <Box sx={{ width: "100%" }}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid sx={{ my: 2, ml: 3, p: 2,textAlign:"center" }} item xs={5.8}>
+          <Grid sx={{ my: 2, ml: 3, p: 2, textAlign: "center" }} item xs={5.8}>
             <StyledList>
               <ListItemText>
                 <h1>Nifty</h1>
               </ListItemText>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer components={["StaticTimePicker"]}>
+                  <DemoItem label="Static variant">
+                    <StaticTimePicker
+                      onChange={handleTimeChange}
+                    />
+                  </DemoItem>
+                </DemoContainer>
+              </LocalizationProvider>
               {theArray.map((ele) => (
                 <StyledListItem>
                   <ListItemText>
@@ -136,7 +127,6 @@ function SensiBullMain() {
                   <Grid xs={4}>
                     <Box sx={{ p: 2, textAlign: "right" }}>
                       <LoadingButton
-                        
                         size="medium"
                         type="submit"
                         variant="contained"
@@ -153,7 +143,7 @@ function SensiBullMain() {
               ))}
             </StyledList>
           </Grid>
-          <Grid sx={{ my: 2, ml: 3, p: 2,textAlign:"center" }} item xs={5.8}>
+          <Grid sx={{ my: 2, ml: 3, p: 2, textAlign: "center" }} item xs={5.8}>
             <StyledList>
               <ListItemText>
                 <h1>BankNifty</h1>
@@ -166,8 +156,7 @@ function SensiBullMain() {
                   </ListItemText>
                   <Grid xs={4}>
                     <Box sx={{ p: 2, textAlign: "right" }}>
-                    <LoadingButton
-                        
+                      <LoadingButton
                         size="medium"
                         type="submit"
                         variant="contained"
@@ -182,7 +171,6 @@ function SensiBullMain() {
                   </Grid>
                 </StyledListItem>
               ))}
-              
             </StyledList>
           </Grid>
         </Grid>
