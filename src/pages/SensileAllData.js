@@ -42,6 +42,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function SensileAllData() {
+  
   const navigate = useNavigate();
   const [theArray, setTheArray] = useState([]);
   const [theArrayOfvalues, setTheArrayOfvalues] = useState([]);

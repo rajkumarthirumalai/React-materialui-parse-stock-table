@@ -9,12 +9,7 @@ import Iconify from "src/components/iconify/Iconify";
 import UserHeader from "src/layouts/dashboard/header/UserHeader";
 import { List, ListItem, ListItemText } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import dayjs from 'dayjs';
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-
-import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker';
+import { Container, MenuItem, Select } from "@mui/material";
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -43,15 +38,20 @@ function SensiBullMain() {
   const navigate = useNavigate();
   const [theArray, setTheArray] = useState([]);
   const [theArrayOfvalues, setTheArrayOfvalues] = useState([]);
-  const [value, setValue] = useState([]);
-  const [selectedTime, setSelectedTime] = useState(new Date()); // set initial time value here
+  const [time, setTime] = useState({
+    hour: "01",
+    minute: "00",
+    meridian: "am",
+  });
 
-  const handleTimeChange = (time) => {
-    setSelectedTime(time);
+  const handleTimeChange = (event) => {
+    const { name, value } = event.target;
+    setTime((prevTime) => ({ ...prevTime, [name]: value }));
   };
+
   useEffect(() => {
     console.log("use");
-    // ParseCall();
+    ParseCall();
   }, []);
   const groupBy = (items, key) =>
     items.reduce(
@@ -99,7 +99,13 @@ function SensiBullMain() {
     console.log(`/strike/${url}`);
     navigate(`/strike/${url}`, { replace: true });
   };
+  const handleClickTime = (url) => {
+    console.log("workss");
+    console.log(`/strike/${url}/`);
+    navigate(`/stirkebytime/${url}/${time.hour}:${time.minute}:${time.meridian}`, { replace: true });
+  };
   console.log(theArray, "theArraytheArraytheArray");
+  console.log(time, "timetime");
   return (
     <>
       <UserHeader />
@@ -110,23 +116,68 @@ function SensiBullMain() {
               <ListItemText>
                 <h1>Nifty</h1>
               </ListItemText>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={["StaticTimePicker"]}>
-                  <DemoItem label="Static variant">
-                    <StaticTimePicker
-                      onChange={handleTimeChange}
-                    />
-                  </DemoItem>
-                </DemoContainer>
-              </LocalizationProvider>
+              <div>
+                <Container maxWidth="sm">
+                  <Grid container spacing={2}>
+                    <Grid item xs={4}>
+                      <Select
+                        name="hour"
+                        value={time.hour}
+                        onChange={handleTimeChange}
+                        fullWidth
+                      >
+                        {Array.from({ length: 12 }, (_, i) => i + 1).map(
+                          (num) => (
+                            <MenuItem
+                              key={num}
+                              value={num < 10 ? `0${num}` : `${num}`}
+                            >
+                              {num < 10 ? `0${num}` : `${num}`}
+                            </MenuItem>
+                          )
+                        )}
+                      </Select>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Select
+                        name="minute"
+                        value={time.minute}
+                        onChange={handleTimeChange}
+                        fullWidth
+                      >
+                        {Array.from({ length: 60 }, (_, i) => i).map((num) => (
+                          <MenuItem
+                            key={num}
+                            value={num < 10 ? `0${num}` : `${num}`}
+                          >
+                            {num < 10 ? `0${num}` : `${num}`}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Select
+                        name="meridian"
+                        value={time.meridian}
+                        onChange={handleTimeChange}
+                        fullWidth
+                      >
+                        <MenuItem value="am">am</MenuItem>
+                        <MenuItem value="pm">pm</MenuItem>
+                      </Select>
+                    </Grid>
+                  </Grid>
+                </Container>
+              </div>
               {theArray.map((ele) => (
                 <StyledListItem>
                   <ListItemText>
                     <h3>{ele}</h3>
                   </ListItemText>
-                  <Grid xs={4}>
+                  <Grid xs={6}>
                     <Box sx={{ p: 2, textAlign: "right" }}>
                       <LoadingButton
+                        sx={{ m: 2, textAlign: "right" }}
                         size="medium"
                         type="submit"
                         variant="contained"
@@ -136,6 +187,18 @@ function SensiBullMain() {
                         }
                       >
                         View all
+                      </LoadingButton>
+                      <LoadingButton
+                        sx={{ m: 2, textAlign: "right" }}
+                        size="medium"
+                        type="submit"
+                        variant="contained"
+                        onClick={() => handleClickTime(ele)}
+                        endIcon={
+                          <Iconify icon={"eva:arrow-ios-forward-fill"} />
+                        }
+                      >
+                        View at {time.hour}:{time.minute}:{time.meridian}
                       </LoadingButton>
                     </Box>
                   </Grid>
@@ -148,15 +211,68 @@ function SensiBullMain() {
               <ListItemText>
                 <h1>BankNifty</h1>
               </ListItemText>
-
+              <div>
+                <Container maxWidth="sm">
+                  <Grid container spacing={2}>
+                    <Grid item xs={4}>
+                      <Select
+                        name="hour"
+                        value={time.hour}
+                        onChange={handleTimeChange}
+                        fullWidth
+                      >
+                        {Array.from({ length: 12 }, (_, i) => i + 1).map(
+                          (num) => (
+                            <MenuItem
+                              key={num}
+                              value={num < 10 ? `0${num}` : `${num}`}
+                            >
+                              {num < 10 ? `0${num}` : `${num}`}
+                            </MenuItem>
+                          )
+                        )}
+                      </Select>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Select
+                        name="minute"
+                        value={time.minute}
+                        onChange={handleTimeChange}
+                        fullWidth
+                      >
+                        {Array.from({ length: 60 }, (_, i) => i).map((num) => (
+                          <MenuItem
+                            key={num}
+                            value={num < 10 ? `0${num}` : `${num}`}
+                          >
+                            {num < 10 ? `0${num}` : `${num}`}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Select
+                        name="meridian"
+                        value={time.meridian}
+                        onChange={handleTimeChange}
+                        fullWidth
+                      >
+                        <MenuItem value="am">am</MenuItem>
+                        <MenuItem value="pm">pm</MenuItem>
+                      </Select>
+                    </Grid>
+                  </Grid>
+                </Container>
+              </div>
               {theArrayOfvalues.map((ele) => (
                 <StyledListItem>
                   <ListItemText>
                     <h3>{ele}</h3>
                   </ListItemText>
-                  <Grid xs={4}>
+                  <Grid xs={6}>
                     <Box sx={{ p: 2, textAlign: "right" }}>
                       <LoadingButton
+                        sx={{ m: 2, textAlign: "right" }}
                         size="medium"
                         type="submit"
                         variant="contained"
@@ -166,6 +282,18 @@ function SensiBullMain() {
                         }
                       >
                         View all
+                      </LoadingButton>
+                      <LoadingButton
+                        sx={{ m: 2, textAlign: "right" }}
+                        size="medium"
+                        type="submit"
+                        variant="contained"
+                        onClick={() => handleClickTime(ele)}
+                        endIcon={
+                          <Iconify icon={"eva:arrow-ios-forward-fill"} />
+                        }
+                      >
+                        View at {time.hour}:{time.minute}:{time.meridian}
                       </LoadingButton>
                     </Box>
                   </Grid>

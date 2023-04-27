@@ -64,6 +64,7 @@
     "react-router-dom": "^6.8.1",
     "react-scripts": "^5.0.1",
     "react-social-login-buttons": "^3.6.1",
+    "react-time-picker": "^6.0.4",
     "reactjs-social-login": "^2.6.2",
     "simplebar-react": "^3.2.1",
     "web-vitals": "^3.1.1"
