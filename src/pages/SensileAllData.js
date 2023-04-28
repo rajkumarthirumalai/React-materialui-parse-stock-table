@@ -114,7 +114,7 @@ function SensileAllData() {
       {/* <Header/> */}
       <UserHeader />
 
-      <>
+      {/* <>
         <Typography variant="h5" sx={{ opacity: 0.82 }}>
           <div
             style={{
@@ -191,7 +191,7 @@ function SensileAllData() {
             </TableBody>
           </Table>
         </TableContainer>
-      </>
+      </> */}
     </>
   );
 }

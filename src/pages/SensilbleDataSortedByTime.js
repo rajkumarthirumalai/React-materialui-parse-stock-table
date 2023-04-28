@@ -65,196 +65,133 @@ function SensilbleDataSortedByTime() {
     );
 
   let dump = useParams();
+
+  let n2 = [];
   async function ParseCall() {
-    console.log("ParseCall");
+    for (let i = 0; i < 5; i++) {
+      (async () => {
+        let timeIs = `${dump.time}`.split(":");
 
-    const qq = new Parse.Query("aprilNifty");
-    let valIs = `${dump.id}`;
-    let timeIs = `${dump.time}`.split(":");
-    console.log(timeIs);
+        var hours = timeIs[0]; // Replace with the desired hour value (1-12)
+        var minutes = timeIs[1] + i ; // Replace with the desired minute value (0-59)
+        var meridian = timeIs[2]; // Replace with 'AM' or 'PM'
 
-    var hours = timeIs[0]; // Replace with the desired hour value (1-12)
-    var minutes = timeIs[1]; // Replace with the desired minute value (0-59)
-    var meridian = timeIs[2]; // Replace with 'AM' or 'PM'
-
-    // Convert hours to 24-hour format if meridian is 'PM'
-    if (meridian === "PM" && hours !== 12) {
-      hours += 12;
-    }
-    // Create the Date object with the specified time
-    var date = new Date();
-    date.setDate(27);
-    date.setHours(hours);
-    date.setMinutes(minutes);
-    date.setSeconds(0); // Set seconds to 0 to avoid any rounding issues
-    // Get the current time
-    var now = date;
-    // Set the time to the start of the minute
-    var minuteStart = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate(),
-      now.getHours(),
-      now.getMinutes(),
-      0
-    );
-    var minuteEnd = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate(),
-      now.getHours(),
-      now.getMinutes() + 1,
-      0
-    );
-    var MyObject = Parse.Object.extend("aprilNifty");
-    var query = new Parse.Query(MyObject);
-    query.greaterThanOrEqualTo("createdAt", minuteStart);
-    query.lessThan("createdAt", minuteEnd);
-    query.limit(1000);
-    query.descending("createdAt");
-    await query
-      .find()
-      .then((r) => {
-        // Find object with matching createdAt value
-        console.log(r);
-        const match = r.filter((object) => {
-          return object.get("Strike")== valIs;
-        });
-        if (parseInt(dump.id) < 30000) {
-          let c = match.map((e) => {
-            const pp = new Object();
-            pp.createdAt = e.createdAt;
-            pp.updatedAt = e.updatedAt;
-            pp.weburl = e.get("weburl");
-            pp.CallGamma = e.get("CallGamma");
-            pp.CallVega = e.get("CallVega");
-            pp.CallTheta = e.get("CallTheta");
-            pp.CallDelta = e.get("CallDelta");
-            pp.CallOL = e.get("CallOL");
-            pp.CallLTP = e.get("CallLTP");
-            pp.Strike = e.get("Strike");
-            pp.PutGamma = e.get("PutGamma");
-            pp.PutVega = e.get("PutVega");
-            pp.PutTheta = e.get("PutTheta");
-            pp.PutDelta = e.get("PutDelta");
-            pp.PutOL = e.get("PutOL");
-            pp.PutLTP = e.get("PutLTP");
-            return pp;
-          });
-          console.log(c, "the array");
-          setTheArray(c);
+        // Convert hours to 24-hour format if meridian is 'PM'
+        if (meridian === "PM" && hours !== 12) {
+          hours += 12;
         }
-        else {
-
-          const qq2 = new Parse.Query("aprilBankNifty");
-          qq2.greaterThanOrEqualTo("createdAt", minuteStart);
-          qq2.lessThan("createdAt", minuteEnd);
-          qq2.limit(1000);
-          qq2.descending("createdAt");
-           qq2.find().then((re) => {
-            console.log("this works 2");
-            let cw = re.map((e) => {
-              const pp = new Object();
-              pp.createdAt = e.createdAt;
-              pp.updatedAt = e.updatedAt;
-              pp.weburl = e.get("weburl");
-              pp.CallGamma = e.get("CallGamma");
-              pp.CallVega = e.get("CallVega");
-              pp.CallTheta = e.get("CallTheta");
-              pp.CallDelta = e.get("CallDelta");
-              pp.CallOL = e.get("CallOL");
-              pp.CallLTP = e.get("CallLTP");
-              pp.Strike = e.get("Strike");
-              pp.PutGamma = e.get("PutGamma");
-              pp.PutVega = e.get("PutVega");
-              pp.PutTheta = e.get("PutTheta");
-              pp.PutDelta = e.get("PutDelta");
-              pp.PutOL = e.get("PutOL");
-              pp.PutLTP = e.get("PutLTP");
-              return pp;
+        // Create the Date object with the specified time
+        var date = new Date();
+        date.setDate(28);
+        date.setHours(hours);
+        date.setMinutes(minutes);
+        date.setSeconds(0); // Set seconds to 0 to avoid any rounding issues
+        // Get the current time
+        var now = date;
+        // Set the time to the start of the minute
+        var minuteStart = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate(),
+          now.getHours(),
+          now.getMinutes(),
+          0
+        );
+        var minuteEnd = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate(),
+          now.getHours(),
+          now.getMinutes() + 1,
+          0
+        );
+        console.log(minuteStart,minuteEnd);
+        var MyObject = Parse.Object.extend("aprilNifty");
+        var query = new Parse.Query(MyObject);
+        query.greaterThanOrEqualTo("createdAt", minuteStart);
+        query.lessThan("createdAt", minuteEnd);
+        query.limit(1000);
+        query.descending("createdAt");
+        await query
+          .find()
+          .then((r) => {
+            r[0].get("spotValue");
+            const match = r.filter((object) => {
+              let resp = object.get("Strike");
+              let median =
+                Math.round(parseInt(object.get("spotValue")) / 50) * 50;
+              resp = Math.round(parseInt(resp) / 50) * 50;
+              return resp >= median - 200 && resp <= median + 200;
             });
-            console.log(cw, "the array");
-            setTheArray(cw);
+
+            if (parseInt(dump.id) < 30000) {
+              let c = match.map((e) => {
+                const pp = new Object();
+                pp.createdAt = e.createdAt;
+                pp.updatedAt = e.updatedAt;
+                pp.spotValue = e.get("spotValue");
+                pp.weburl = e.get("weburl");
+                pp.CallGamma = e.get("CallGamma");
+                pp.CallVega = e.get("CallVega");
+                pp.CallTheta = e.get("CallTheta");
+                pp.CallDelta = e.get("CallDelta");
+                pp.CallOL = e.get("CallOL");
+                pp.CallLTP = e.get("CallLTP");
+                pp.Strike = e.get("Strike");
+                pp.PutGamma = e.get("PutGamma");
+                pp.PutVega = e.get("PutVega");
+                pp.PutTheta = e.get("PutTheta");
+                pp.PutDelta = e.get("PutDelta");
+                pp.PutOL = e.get("PutOL");
+                pp.PutLTP = e.get("PutLTP");
+                return pp;
+              });
+              let newArr = c.map((e) => ({ pl: e.PutLTP, clp: e.CallLTP }));
+              console.log(newArr, "for this iteration", i, c);
+              n2[i] = newArr;
+              //newArr = []
+            }
+            console.log(n2, "heerree bOOII");
+            // else {
+            //   const qq2 = new Parse.Query("aprilBankNifty");
+            //   qq2.greaterThanOrEqualTo("createdAt", minuteStart);
+            //   qq2.lessThan("createdAt", minuteEnd);
+            //   qq2.limit(1000);
+            //   qq2.descending("createdAt");
+            //   qq2.find().then((re) => {
+            //     console.log("this works 2");
+            //     let cw = re.map((e) => {
+            //       const pp = new Object();
+            //       pp.createdAt = e.createdAt;
+            //       pp.updatedAt = e.updatedAt;
+            //       pp.spotValue = e.get("spotValue");
+            //       pp.Strike = e.get("Strike");
+            //       pp.weburl = e.get("weburl");
+            //       pp.CallGamma = e.get("CallGamma");
+            //       pp.CallVega = e.get("CallVega");
+            //       pp.CallTheta = e.get("CallTheta");
+            //       pp.CallDelta = e.get("CallDelta");
+            //       pp.CallOL = e.get("CallOL");
+            //       pp.CallLTP = e.get("CallLTP");
+            //       pp.Strike = e.get("Strike");
+            //       pp.PutGamma = e.get("PutGamma");
+            //       pp.PutVega = e.get("PutVega");
+            //       pp.PutTheta = e.get("PutTheta");
+            //       pp.PutDelta = e.get("PutDelta");
+            //       pp.PutOL = e.get("PutOL");
+            //       pp.PutLTP = e.get("PutLTP");
+            //       return pp;
+            //     });
+            //     console.log(cw.map(e=>({pl:e.PutLTP,clp:e.CallLTP})), "the array");
+            //     setTheArray(cw);
+            //   });
+            // }
+          })
+          .catch((error) => {
+            // Handle the error
           });
-        }
-        console.log(match,"matchcc");
-
-        // if (match) {
-        //   // Do something with the matching object
-        //   console.log("Matching object found:", match);
-        // } else {
-        //   console.log("No matching object found.");
-        // }
-      })
-      .catch((error) => {
-        // Handle the error
-      });
-    // await qq
-    //   .find()
-    //   .then(async (r) => {
-    //     console.log(r, "r is");
-        // if (parseInt(dump.id) < 30000) {
-        //   console.log("it is found");
-        //   let c = r.map((e) => {
-        //     const pp = new Object();
-        //     pp.createdAt = e.createdAt;
-        //     pp.updatedAt = e.updatedAt;
-        //     pp.weburl = e.get("weburl");
-        //     pp.CallGamma = e.get("CallGamma");
-        //     pp.CallVega = e.get("CallVega");
-        //     pp.CallTheta = e.get("CallTheta");
-        //     pp.CallDelta = e.get("CallDelta");
-        //     pp.CallOL = e.get("CallOL");
-        //     pp.CallLTP = e.get("CallLTP");
-        //     pp.Strike = e.get("Strike");
-        //     pp.PutGamma = e.get("PutGamma");
-        //     pp.PutVega = e.get("PutVega");
-        //     pp.PutTheta = e.get("PutTheta");
-        //     pp.PutDelta = e.get("PutDelta");
-        //     pp.PutOL = e.get("PutOL");
-        //     pp.PutLTP = e.get("PutLTP");
-        //     return pp;
-        //   });
-        //   console.log(c, "the array");
-        //   setTheArray(c);
-        // } else {
-        //   console.log("it is not found");
-
-        //   console.log("this works 1");
-        //   const qq2 = new Parse.Query("aprilbankNifty");
-        //   let valIs = `${dump.id}`;
-        //   qq2.equalTo("Strike", valIs);
-        //   qq2.limit(1000);
-        //   qq2.descending("createdAt");
-
-        //   await qq2.find().then((re) => {
-        //     console.log("this works 2");
-        //     let cw = re.map((e) => {
-        //       const pp = new Object();
-        //       pp.createdAt = e.createdAt;
-        //       pp.updatedAt = e.updatedAt;
-        //       pp.weburl = e.get("weburl");
-        //       pp.CallGamma = e.get("CallGamma");
-        //       pp.CallVega = e.get("CallVega");
-        //       pp.CallTheta = e.get("CallTheta");
-        //       pp.CallDelta = e.get("CallDelta");
-        //       pp.CallOL = e.get("CallOL");
-        //       pp.CallLTP = e.get("CallLTP");
-        //       pp.Strike = e.get("Strike");
-        //       pp.PutGamma = e.get("PutGamma");
-        //       pp.PutVega = e.get("PutVega");
-        //       pp.PutTheta = e.get("PutTheta");
-        //       pp.PutDelta = e.get("PutDelta");
-        //       pp.PutOL = e.get("PutOL");
-        //       pp.PutLTP = e.get("PutLTP");
-        //       return pp;
-        //     });
-        //     console.log(cw, "the array");
-        //     setTheArray(cw);
-        //   });
-        // }
-    //   })
-    //   .catch(async () => {});
+      })();
+    }
   }
 
   const signout = () => {
@@ -298,11 +235,13 @@ function SensilbleDataSortedByTime() {
           </Grid>
         </div>
         {/* </Typography> */}
-        <TableContainer component={Paper}>
+        {/* <TableContainer component={Paper}>
           <Table stickyHeader sx={{ minWidth: 650 }}>
             <TableHead>
               <TableRow>
                 <TableCell>Date</TableCell>
+                <TableCell align="right">Strike</TableCell>
+                <TableCell align="right">spotValue</TableCell>
                 <TableCell align="right">CallGamma</TableCell>
                 <TableCell align="right">CallVega</TableCell>
                 <TableCell align="right">CallTheta</TableCell>
@@ -325,6 +264,8 @@ function SensilbleDataSortedByTime() {
                   }}
                 >
                   <TableCell>{row.createdAt.toLocaleString()}</TableCell>
+                  <TableCell align="right">{row.Strike}</TableCell>
+                  <TableCell align="right">{row.spotValue}</TableCell>
                   <TableCell align="right">{row.CallGamma}</TableCell>
                   <TableCell align="right">{row.CallVega}</TableCell>
                   <TableCell align="right">{row.CallTheta}</TableCell>
@@ -337,6 +278,40 @@ function SensilbleDataSortedByTime() {
                   <TableCell align="right">{row.PutDelta}</TableCell>
                   <TableCell align="right">{row.PutOL}</TableCell>
                   <TableCell align="right">{row.PutLTP}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer> */}
+        <TableContainer component={Paper}>
+          <Table stickyHeader sx={{ minWidth: 650 }}>
+            <TableHead>
+              <TableRow>
+                <TableCell>time</TableCell>
+                <TableCell align="right">-200</TableCell>
+                <TableCell align="right">-150</TableCell>
+                <TableCell align="right">-100</TableCell>
+                <TableCell align="right">-50</TableCell>
+                <TableCell align="right">0</TableCell>
+                <TableCell align="right">50</TableCell>
+                <TableCell align="right">100</TableCell>
+                <TableCell align="right">150</TableCell>
+                <TableCell align="right">200</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {theArray?.map((row, i) => (
+                <TableRow
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                  }}
+                >
+                  <TableCell>{row.createdAt.toLocaleString()}</TableCell>
+                  <TableCell align="right">{row.Strike}</TableCell>
+                  <TableCell align="right">{row.spotValue}</TableCell>
+                  <TableCell align="right">{row.CallGamma}</TableCell>
+                  <TableCell align="right">{row.CallVega}</TableCell>
+                  <TableCell align="right">{row.CallVega}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
