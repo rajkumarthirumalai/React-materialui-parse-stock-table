@@ -68,12 +68,12 @@ function SensilbleDataSortedByTime() {
 
   let n2 = [];
   async function ParseCall() {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 30; i++) {
       (async () => {
         let timeIs = `${dump.time}`.split(":");
 
         var hours = timeIs[0]; // Replace with the desired hour value (1-12)
-        var minutes = timeIs[1] + i ; // Replace with the desired minute value (0-59)
+        var minutes = timeIs[1] + i; // Replace with the desired minute value (0-59)
         var meridian = timeIs[2]; // Replace with 'AM' or 'PM'
 
         // Convert hours to 24-hour format if meridian is 'PM'
@@ -81,14 +81,26 @@ function SensilbleDataSortedByTime() {
           hours += 12;
         }
         // Create the Date object with the specified time
-        var date = new Date();
-        date.setDate(28);
-        date.setHours(hours);
-        date.setMinutes(minutes);
-        date.setSeconds(0); // Set seconds to 0 to avoid any rounding issues
-        // Get the current time
-        var now = date;
-        // Set the time to the start of the minute
+        // var date = new Date();
+        // date.setDate(28);
+        // date.setHours(hours);
+        // date.setMinutes(minutes);
+        // date.setSeconds(0); // Set seconds to 0 to avoid any rounding issues
+        // // Get the current time
+        // var now = date;
+        // // Set the time to the start of the minute
+        // Create a new Date object for the current date and time
+        const now = new Date();
+        now.setMonth(3);
+        // Set the minute to 30
+        now.setMinutes(minutes);
+        now.setHours(13);
+        // Set the day to 15
+        now.setDate(28);
+
+        // Log the updated date and time to the console
+        console.log(now);
+
         var minuteStart = new Date(
           now.getFullYear(),
           now.getMonth(),
@@ -105,7 +117,7 @@ function SensilbleDataSortedByTime() {
           now.getMinutes() + 1,
           0
         );
-        console.log(minuteStart,minuteEnd);
+        console.log(minuteStart, minuteEnd);
         var MyObject = Parse.Object.extend("aprilNifty");
         var query = new Parse.Query(MyObject);
         query.greaterThanOrEqualTo("createdAt", minuteStart);
@@ -115,6 +127,7 @@ function SensilbleDataSortedByTime() {
         await query
           .find()
           .then((r) => {
+            console.log(r);
             r[0].get("spotValue");
             const match = r.filter((object) => {
               let resp = object.get("Strike");
@@ -123,35 +136,36 @@ function SensilbleDataSortedByTime() {
               resp = Math.round(parseInt(resp) / 50) * 50;
               return resp >= median - 200 && resp <= median + 200;
             });
+            console.log(match);
+            let c = match.map((e) => {
+              const pp = new Object();
+              pp.createdAt = e.createdAt;
+              pp.updatedAt = e.updatedAt;
+              pp.spotValue = e.get("spotValue");
+              pp.weburl = e.get("weburl");
+              pp.CallGamma = e.get("CallGamma");
+              pp.CallVega = e.get("CallVega");
+              pp.CallTheta = e.get("CallTheta");
+              pp.CallDelta = e.get("CallDelta");
+              pp.CallOL = e.get("CallOL");
+              pp.CallLTP = e.get("CallLTP");
+              pp.Strike = e.get("Strike");
+              pp.PutGamma = e.get("PutGamma");
+              pp.PutVega = e.get("PutVega");
+              pp.PutTheta = e.get("PutTheta");
+              pp.PutDelta = e.get("PutDelta");
+              pp.PutOL = e.get("PutOL");
+              pp.PutLTP = e.get("PutLTP");
+              return pp;
+            });
+            console.log(c, "this is cc");
+            let newArr = c.map((e) => e);
+            console.log(newArr, "for this iteration", i, c);
+            n2[i] = newArr;
+            //newArr = []
 
-            if (parseInt(dump.id) < 30000) {
-              let c = match.map((e) => {
-                const pp = new Object();
-                pp.createdAt = e.createdAt;
-                pp.updatedAt = e.updatedAt;
-                pp.spotValue = e.get("spotValue");
-                pp.weburl = e.get("weburl");
-                pp.CallGamma = e.get("CallGamma");
-                pp.CallVega = e.get("CallVega");
-                pp.CallTheta = e.get("CallTheta");
-                pp.CallDelta = e.get("CallDelta");
-                pp.CallOL = e.get("CallOL");
-                pp.CallLTP = e.get("CallLTP");
-                pp.Strike = e.get("Strike");
-                pp.PutGamma = e.get("PutGamma");
-                pp.PutVega = e.get("PutVega");
-                pp.PutTheta = e.get("PutTheta");
-                pp.PutDelta = e.get("PutDelta");
-                pp.PutOL = e.get("PutOL");
-                pp.PutLTP = e.get("PutLTP");
-                return pp;
-              });
-              let newArr = c.map((e) => ({ pl: e.PutLTP, clp: e.CallLTP }));
-              console.log(newArr, "for this iteration", i, c);
-              n2[i] = newArr;
-              //newArr = []
-            }
             console.log(n2, "heerree bOOII");
+
             // else {
             //   const qq2 = new Parse.Query("aprilBankNifty");
             //   qq2.greaterThanOrEqualTo("createdAt", minuteStart);
@@ -192,6 +206,7 @@ function SensilbleDataSortedByTime() {
           });
       })();
     }
+    console.log(n2, "thisss");
   }
 
   const signout = () => {
@@ -276,7 +291,7 @@ function SensilbleDataSortedByTime() {
                   <TableCell align="right">{row.PutVega}</TableCell>
                   <TableCell align="right">{row.PutTheta}</TableCell>
                   <TableCell align="right">{row.PutDelta}</TableCell>
-                  <TableCell align="right">{row.PutOL}</TableCell>
+                  <TableCell align="right">{PutPutOL}</TableCell>
                   <TableCell align="right">{row.PutLTP}</TableCell>
                 </TableRow>
               ))}
@@ -288,32 +303,138 @@ function SensilbleDataSortedByTime() {
             <TableHead>
               <TableRow>
                 <TableCell>time</TableCell>
-                <TableCell align="right">-200</TableCell>
-                <TableCell align="right">-150</TableCell>
-                <TableCell align="right">-100</TableCell>
-                <TableCell align="right">-50</TableCell>
-                <TableCell align="right">0</TableCell>
-                <TableCell align="right">50</TableCell>
-                <TableCell align="right">100</TableCell>
-                <TableCell align="right">150</TableCell>
-                <TableCell align="right">200</TableCell>
+                <TableCell align="center">-200</TableCell>
+                <TableCell align="center">-150</TableCell>
+                <TableCell align="center">-100</TableCell>
+                <TableCell align="center">-50</TableCell>
+                <TableCell align="center">0</TableCell>
+                <TableCell align="center">50</TableCell>
+                <TableCell align="center">100</TableCell>
+                <TableCell align="center">150</TableCell>
+                <TableCell align="center">200</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {theArray?.map((row, i) => (
-                <TableRow
-                  sx={{
-                    "&:last-child td, &:last-child th": { border: 0 },
-                  }}
-                >
-                  <TableCell>{row.createdAt.toLocaleString()}</TableCell>
-                  <TableCell align="right">{row.Strike}</TableCell>
-                  <TableCell align="right">{row.spotValue}</TableCell>
-                  <TableCell align="right">{row.CallGamma}</TableCell>
-                  <TableCell align="right">{row.CallVega}</TableCell>
-                  <TableCell align="right">{row.CallVega}</TableCell>
-                </TableRow>
-              ))}
+              {theArray?.map((row, i) => {
+                // (console.log))
+                return (
+                  <TableRow
+                    sx={{
+                      "&:last-child td, &:last-child th": { border: 0 },
+                    }}
+                  >
+                    <TableCell>{row[0].createdAt.toLocaleString()}</TableCell>
+                    <TableCell align="center">
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <h2>CL</h2>
+                          {row[0].CallLTP}
+                        </Grid>
+                        <Grid item xs={6}>
+                          <h2>PL</h2>
+                          {row[0].PutLTP}
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <h2>CL</h2>
+                          {row[1].CallLTP}
+                        </Grid>
+                        <Grid item xs={6}>
+                          <h2>PL</h2>
+                          {row[1].PutLTP}
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <h2>CL</h2>
+                          {row[2].CallLTP}
+                        </Grid>
+                        <Grid item xs={6}>
+                          <h2>PL</h2>
+                          {row[2].PutLTP}
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <h2>CL</h2>
+                          {row[3].CallLTP}
+                        </Grid>
+                        <Grid item xs={6}>
+                          <h2>PL</h2>
+                          {row[3].PutLTP}
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <h2>CL</h2>
+                          {row[4].CallLTP}
+                        </Grid>
+                        <Grid item xs={6}>
+                          <h2>PL</h2>
+                          {row[4].PutLTP}
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <h2>CL</h2>
+                          {row[5].CallLTP}
+                        </Grid>
+                        <Grid item xs={6}>
+                          <h2>PL</h2>
+                          {row[5].PutLTP}
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <h2>CL</h2>
+                          {row[0].CallLTP}
+                        </Grid>
+                        <Grid item xs={6}>
+                          <h2>PL</h2>
+                          {row[0].PutLTP}
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <h2>CL</h2>
+                          {row[0].CallLTP}
+                        </Grid>
+                        <Grid item xs={6}>
+                          <h2>PL</h2>
+                          {row[0].PutLTP}
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <h2>CL</h2>
+                          {row[0].CallLTP}
+                        </Grid>
+                        <Grid item xs={6}>
+                          <h2>PL</h2>
+                          {row[0].PutLTP}
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>

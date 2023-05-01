@@ -102,7 +102,7 @@ function SensiBullMain() {
   const handleClickTime = (url) => {
     console.log("workss");
     console.log(`/strike/${url}/`);
-    navigate(`/stirkebytime/${url}/${time.hour}:${time.minute}:${time.meridian}`, { replace: true });
+    navigate(`/stirkebytime/${time.hour}:${time.minute}:${time.meridian}`, { replace: true });
   };
   console.log(theArray, "theArraytheArraytheArray");
   console.log(time, "timetime");

@@ -67,7 +67,7 @@ export default function App() {
               }
             />
             <Route
-              path="/stirkebytime/:id/:time"
+              path="/stirkebytime/:time"
               element={
                 <Protected isSignedIn={isSignedIn}>
                   <SensilbleDataSortedByTime />
