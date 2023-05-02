@@ -33,6 +33,7 @@ import Iconify from "src/components/iconify/Iconify";
 import UserHeader from "src/layouts/dashboard/header/UserHeader";
 import { Margin } from "@mui/icons-material";
 import { TimeInput, TimePicker } from "@mui/lab";
+import { Container, MenuItem, Select } from "@mui/material";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -45,14 +46,29 @@ const Item = styled(Paper)(({ theme }) => ({
 function SensilbleDataSortedByTime() {
   const navigate = useNavigate();
   const [theArray, setTheArray] = useState([]);
+  const [ltpArray, setltpArray] = useState([]);
   const [theArrayOfvalues, setTheArrayOfvalues] = useState([]);
   const [selectedTime, setSelectedTime] = useState(new Date()); // set initial time value here
+  const [time, setTime] = useState({
+    hour: "01",
+    minute: "00",
+    meridian: "am",
+  });
+  const [totime, tosetTime] = useState({
+    hour: "11",
+    minute: "00",
+    meridian: "am",
+  });
 
-  const handleTimeChange = (time) => {
-    setSelectedTime(time);
+  const handleTimeChange = (event) => {
+    const { name, value } = event.target;
+    setTime((prevTime) => ({ ...prevTime, [name]: value }));
+  };
+  const handleTimeChange1 = (event) => {
+    const { name, value } = event.target;
+    tosetTime((prevTime) => ({ ...prevTime, [name]: value }));
   };
   useEffect(() => {
-    console.log("use");
     ParseCall();
   }, []);
   const groupBy = (items, key) =>
@@ -75,15 +91,16 @@ function SensilbleDataSortedByTime() {
         var hours = timeIs[0]; // Replace with the desired hour value (1-12)
         var minutes = timeIs[1] + i; // Replace with the desired minute value (0-59)
         var meridian = timeIs[2];
-        if (meridian === "PM" && hours !== 12) {
-          hours += 12;
+        console.log(meridian);
+        if (meridian === "pm" && hours !== 12) {
+          hours = parseInt(hours) + 12;
         }
+        console.log(parseInt(hours), "this is hours");
         const now = new Date();
         now.setMonth(3);
         now.setMinutes(minutes);
-        now.setHours(13);
+        now.setHours(parseInt(hours));
         now.setDate(28);
-        console.log(now);
 
         var minuteStart = new Date(
           now.getFullYear(),
@@ -111,7 +128,7 @@ function SensilbleDataSortedByTime() {
         await query
           .find()
           .then((r) => {
-            console.log(r);
+            // console.log(r);
             r[0].get("spotValue");
             const match = r.filter((object) => {
               let resp = object.get("Strike");
@@ -120,7 +137,7 @@ function SensilbleDataSortedByTime() {
               resp = Math.round(parseInt(resp) / 50) * 50;
               return resp >= median - 200 && resp <= median + 200;
             });
-            console.log(match);
+            // console.log(match);
             let c = match.map((e) => {
               const pp = new Object();
               pp.createdAt = e.createdAt;
@@ -140,6 +157,7 @@ function SensilbleDataSortedByTime() {
               pp.PutDelta = e.get("PutDelta");
               pp.PutOL = e.get("PutOL");
               pp.PutLTP = e.get("PutLTP");
+              pp.indiaVix = e.get("indiaVix");
               return pp;
             });
             console.log(c, "this is cc");
@@ -153,11 +171,44 @@ function SensilbleDataSortedByTime() {
       })();
     }
     setTimeout(() => {
-      setTheArray(n2);
-    }, 3000);
+      setltpArray(n2);
+    }, 2000);
     console.log(theArray, "thisss");
   }
+  const FindData = () => {
+    console.log("work aguthu");
+    let t1 = time
+    let t2 = totime
+    // Get the current date
+    const currentDate = new Date();
+    if(t1.meridian == "pm"){
+      t1.hour = parseInt(t1.hour) + 12
+    }
+    if(t2.meridian == "pm"){
+      t2.hour = parseInt(t2.hour) + 12
+    }
+    console.log(t1, t2, "works");
+    // Define two time values in "hh:mm:ss" format
+    const time1 = `${t1.hour}:${t1.minute}:00`;
+    const time2 = `${t2.hour}:${t2.minute}:00`;
 
+    // Combine the current date with the time values
+    const dateTime1 = new Date(`${currentDate.toDateString()} ${time1}`);
+    const dateTime2 = new Date(`${currentDate.toDateString()} ${time2}`);
+
+    // Calculate the time difference in milliseconds
+    const timeDiff = Math.abs(dateTime1 - dateTime2);
+
+    // Convert the time difference to minutes
+    const minutesDiff = Math.floor(timeDiff / 1000 / 60);
+
+    console.log(
+      `The time difference between ${time1} and ${time2} is ${minutesDiff} minutes.`
+    );
+      
+    t1 = time
+    t2 = totime
+  };
   const signout = () => {
     navigate(`/sensibullview`, { replace: true });
   };
@@ -180,11 +231,108 @@ function SensilbleDataSortedByTime() {
             marginBottom: 5,
           }}
         >
-          <Typography variant="h1" color="primary">
-            {" "}
-            {dump.id}
-          </Typography>
-          <Grid textAlign="right" sx={{ paddingX: 5, marginY: 1 }}>
+          <Container maxWidth="sm">
+            <Grid container spacing={2}>
+              <Typography variant="h2" color="primary">
+                From
+              </Typography>
+              <Grid item xs={2}>
+                <Select
+                  name="hour"
+                  value={time.hour}
+                  onChange={handleTimeChange}
+                  fullWidth
+                >
+                  {Array.from({ length: 12 }, (_, i) => i + 1).map((num) => (
+                    <MenuItem key={num} value={num < 10 ? `0${num}` : `${num}`}>
+                      {num < 10 ? `0${num}` : `${num}`}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+              <Grid item xs={2}>
+                <Select
+                  name="minute"
+                  value={time.minute}
+                  onChange={handleTimeChange}
+                  fullWidth
+                >
+                  {Array.from({ length: 60 }, (_, i) => i).map((num) => (
+                    <MenuItem key={num} value={num < 10 ? `0${num}` : `${num}`}>
+                      {num < 10 ? `0${num}` : `${num}`}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+              <Grid item xs={2}>
+                <Select
+                  name="meridian"
+                  value={time.meridian}
+                  onChange={handleTimeChange}
+                  fullWidth
+                >
+                  <MenuItem value="am">am</MenuItem>
+                  <MenuItem value="pm">pm</MenuItem>
+                </Select>
+              </Grid>
+            </Grid>
+          </Container>
+          <Container maxWidth="sm">
+            <Grid container spacing={2}>
+              <Typography variant="h2" color="primary">
+                To
+              </Typography>
+              <Grid item xs={2}>
+                <Select
+                  name="hour"
+                  value={totime.hour}
+                  onChange={handleTimeChange}
+                  fullWidth
+                >
+                  {Array.from({ length: 12 }, (_, i) => i + 1).map((num) => (
+                    <MenuItem key={num} value={num < 10 ? `0${num}` : `${num}`}>
+                      {num < 10 ? `0${num}` : `${num}`}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+
+              <Grid item xs={2}>
+                <Select
+                  name="minute"
+                  value={totime.minute}
+                  onChange={handleTimeChange}
+                  fullWidth
+                >
+                  {Array.from({ length: 60 }, (_, i) => i).map((num) => (
+                    <MenuItem key={num} value={num < 10 ? `0${num}` : `${num}`}>
+                      {num < 10 ? `0${num}` : `${num}`}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+              <Grid item xs={2}>
+                <Select
+                  name="meridian"
+                  value={totime.meridian}
+                  onChange={handleTimeChange1}
+                  fullWidth
+                >
+                  <MenuItem value="am">am</MenuItem>
+                  <MenuItem value="pm">pm</MenuItem>
+                </Select>
+              </Grid>
+            </Grid>
+          </Container>
+          <Grid textAlign="left" sx={{ paddingX: 2, marginY: 1 }}>
+            <Button
+              size="medium"
+              color="warning"
+              variant="outlined"
+              onClick={FindData}
+            >
+              Find Data
+            </Button>
             <Button
               size="medium"
               color="warning"
@@ -249,19 +397,111 @@ function SensilbleDataSortedByTime() {
             <TableHead>
               <TableRow>
                 <TableCell>time</TableCell>
-                <TableCell align="right">-200</TableCell>
-                <TableCell align="right">-150</TableCell>
-                <TableCell align="right">-100</TableCell>
-                <TableCell align="right">-50</TableCell>
-                <TableCell align="right">0</TableCell>
-                <TableCell align="right">50</TableCell>
-                <TableCell align="right">100</TableCell>
-                <TableCell align="right">150</TableCell>
-                <TableCell align="right">200</TableCell>
+                <TableCell>SpotValue</TableCell>
+                <TableCell>IndiaVix</TableCell>
+                <TableCell align="center">
+                  -200
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      callLtp
+                    </Grid>
+                    <Grid item xs={6}>
+                      putLtp
+                    </Grid>
+                  </Grid>
+                </TableCell>
+                <TableCell align="center">
+                  -150
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      callLtp
+                    </Grid>
+                    <Grid item xs={6}>
+                      putLtp
+                    </Grid>
+                  </Grid>
+                </TableCell>
+                <TableCell align="center">
+                  -100
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      callLtp
+                    </Grid>
+                    <Grid item xs={6}>
+                      putLtp
+                    </Grid>
+                  </Grid>
+                </TableCell>
+                <TableCell align="center">
+                  -50
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      callLtp
+                    </Grid>
+                    <Grid item xs={6}>
+                      putLtp
+                    </Grid>
+                  </Grid>
+                </TableCell>
+                <TableCell align="center">
+                  0
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      callLtp
+                    </Grid>
+                    <Grid item xs={6}>
+                      putLtp
+                    </Grid>
+                  </Grid>
+                </TableCell>
+                <TableCell align="center">
+                  50
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      callLtp
+                    </Grid>
+                    <Grid item xs={6}>
+                      putLtp
+                    </Grid>
+                  </Grid>
+                </TableCell>
+                <TableCell align="center">
+                  100
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      callLtp
+                    </Grid>
+                    <Grid item xs={6}>
+                      putLtp
+                    </Grid>
+                  </Grid>
+                </TableCell>
+                <TableCell align="center">
+                  150
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      callLtp
+                    </Grid>
+                    <Grid item xs={6}>
+                      putLtp
+                    </Grid>
+                  </Grid>
+                </TableCell>
+                <TableCell align="center">
+                  200
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      callLtp
+                    </Grid>
+                    <Grid item xs={6}>
+                      putLtp
+                    </Grid>
+                  </Grid>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {theArray?.map((row, i) => {
+              {ltpArray?.map((row, i) => {
                 // (console.log))
                 return (
                   <TableRow
@@ -270,13 +510,16 @@ function SensilbleDataSortedByTime() {
                     }}
                   >
                     <TableCell>{row[0].createdAt.toLocaleString()}</TableCell>
+                    <TableCell>{row[0].spotValue}</TableCell>
+                    <TableCell>{JSON.parse(row[0].indiaVix)}</TableCell>
+
                     <TableCell align="right">
                       <Grid container spacing={2}>
                         <Grid item xs={6}>
                           {row[0].CallLTP}
                         </Grid>
                         <Grid item xs={6}>
-                          {row[0].PutLTP}
+                          {row[0].PutGamma}
                         </Grid>
                       </Grid>
                     </TableCell>
@@ -286,7 +529,7 @@ function SensilbleDataSortedByTime() {
                           {row[1].CallLTP}
                         </Grid>
                         <Grid item xs={6}>
-                          {row[1].PutLTP}
+                          {row[1].PutGamma}
                         </Grid>
                       </Grid>
                     </TableCell>
@@ -296,7 +539,7 @@ function SensilbleDataSortedByTime() {
                           {row[2].CallLTP}
                         </Grid>
                         <Grid item xs={6}>
-                          {row[2].PutLTP}
+                          {row[2].PutGamma}
                         </Grid>
                       </Grid>
                     </TableCell>
@@ -306,7 +549,7 @@ function SensilbleDataSortedByTime() {
                           {row[3].CallLTP}
                         </Grid>
                         <Grid item xs={6}>
-                          {row[3].PutLTP}
+                          {row[3].PutGamma}
                         </Grid>
                       </Grid>
                     </TableCell>
@@ -316,7 +559,7 @@ function SensilbleDataSortedByTime() {
                           {row[4].CallLTP}
                         </Grid>
                         <Grid item xs={6}>
-                          {row[4].PutLTP}
+                          {row[4].PutGamma}
                         </Grid>
                       </Grid>
                     </TableCell>
@@ -326,7 +569,7 @@ function SensilbleDataSortedByTime() {
                           {row[5].CallLTP}
                         </Grid>
                         <Grid item xs={6}>
-                          {row[5].PutLTP}
+                          {row[5].PutGamma}
                         </Grid>
                       </Grid>
                     </TableCell>
@@ -336,7 +579,7 @@ function SensilbleDataSortedByTime() {
                           {row[6].CallLTP}
                         </Grid>
                         <Grid item xs={6}>
-                          {row[6].PutLTP}
+                          {row[6].PutGamma}
                         </Grid>
                       </Grid>
                     </TableCell>
@@ -346,7 +589,7 @@ function SensilbleDataSortedByTime() {
                           {row[7].CallLTP}
                         </Grid>
                         <Grid item xs={6}>
-                          {row[7].PutLTP}
+                          {row[7].PutGamma}
                         </Grid>
                       </Grid>
                     </TableCell>
@@ -356,7 +599,7 @@ function SensilbleDataSortedByTime() {
                           {row[8].CallLTP}
                         </Grid>
                         <Grid item xs={6}>
-                          {row[8].PutLTP}
+                          {row[8].PutGamma}
                         </Grid>
                       </Grid>
                     </TableCell>
