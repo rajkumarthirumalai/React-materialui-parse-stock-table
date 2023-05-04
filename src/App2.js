@@ -18,6 +18,7 @@ import SensiBullMain from './pages/Sensibullmain';
 import Stylingu from './pages/Stylingu';
 import SensileAllData from './pages/SensileAllData';
 import SensilbleDataSortedByTime from './pages/SensilbleDataSortedByTime';
+import SensilbleSortedbyBank from './pages/sensibleSortedbyBank';
 // Your Parse initialization configuration goes here
 const PARSE_APPLICATION_ID = '123';
 // const PARSE_HOST_URL = 'http://localhost:1337/parse';
@@ -71,6 +72,14 @@ export default function App() {
               element={
                 <Protected isSignedIn={isSignedIn}>
                   <SensilbleDataSortedByTime />
+                </Protected>
+              }
+            />
+            <Route
+              path="/stirkebytimebank/:time"
+              element={
+                <Protected isSignedIn={isSignedIn}>
+                  <SensilbleSortedbyBank/>
                 </Protected>
               }
             />

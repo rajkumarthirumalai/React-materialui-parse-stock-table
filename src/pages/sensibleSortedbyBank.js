@@ -43,7 +43,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-function SensilbleDataSortedByTime() {
+function SensilbleSortedbyBank() {
   const navigate = useNavigate();
   const [theArray, setTheArray] = useState([]);
   const [ltpArray, setltpArray] = useState([]);
@@ -119,7 +119,7 @@ function SensilbleDataSortedByTime() {
           0
         );
         console.log(minuteStart, minuteEnd);
-        var MyObject = Parse.Object.extend("aprilNifty");
+        var MyObject = Parse.Object.extend("aprilbankNifty");
         var query = new Parse.Query(MyObject);
         query.greaterThanOrEqualTo("createdAt", minuteStart);
         query.lessThan("createdAt", minuteEnd);
@@ -133,9 +133,9 @@ function SensilbleDataSortedByTime() {
             const match = r.filter((object) => {
               let resp = object.get("Strike");
               let median =
-                Math.round(parseInt(object.get("spotValue")) / 50) * 50;
-              resp = Math.round(parseInt(resp) / 50) * 50;
-              return resp >= median - 200 && resp <= median + 200;
+                Math.round(parseInt(object.get("spotValue")) / 100) * 100;
+              resp = Math.round(parseInt(resp) / 100) * 100;
+              return resp >= median - 400 && resp <= median + 400;
             });
             // console.log(match);
             let c = match.map((e) => {
@@ -400,7 +400,7 @@ function SensilbleDataSortedByTime() {
                 <TableCell>SpotValue</TableCell>
                 <TableCell>IndiaVix</TableCell>
                 <TableCell align="center">
-                  -200
+                  -400
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
                       callLtp
@@ -411,7 +411,18 @@ function SensilbleDataSortedByTime() {
                   </Grid>
                 </TableCell>
                 <TableCell align="center">
-                  -150
+                  -300
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      callLtp
+                    </Grid>
+                    <Grid item xs={6}>
+                      putLtp
+                    </Grid>
+                  </Grid>
+                </TableCell>
+                <TableCell align="center">
+                  -200
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
                       callLtp
@@ -433,29 +444,7 @@ function SensilbleDataSortedByTime() {
                   </Grid>
                 </TableCell>
                 <TableCell align="center">
-                  -50
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      callLtp
-                    </Grid>
-                    <Grid item xs={6}>
-                      putLtp
-                    </Grid>
-                  </Grid>
-                </TableCell>
-                <TableCell align="center">
                   0
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      callLtp
-                    </Grid>
-                    <Grid item xs={6}>
-                      putLtp
-                    </Grid>
-                  </Grid>
-                </TableCell>
-                <TableCell align="center">
-                  50
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
                       callLtp
@@ -477,7 +466,7 @@ function SensilbleDataSortedByTime() {
                   </Grid>
                 </TableCell>
                 <TableCell align="center">
-                  150
+                  200
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
                       callLtp
@@ -488,7 +477,18 @@ function SensilbleDataSortedByTime() {
                   </Grid>
                 </TableCell>
                 <TableCell align="center">
-                  200
+                  300
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      callLtp
+                    </Grid>
+                    <Grid item xs={6}>
+                      putLtp
+                    </Grid>
+                  </Grid>
+                </TableCell>
+                <TableCell align="center">
+                  400
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
                       callLtp
@@ -614,5 +614,5 @@ function SensilbleDataSortedByTime() {
   );
 }
 
-export default SensilbleDataSortedByTime;
+export default SensilbleSortedbyBank;
   

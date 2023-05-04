@@ -104,6 +104,11 @@ function SensiBullMain() {
     console.log(`/strike/${url}/`);
     navigate(`/stirkebytime/${time.hour}:${time.minute}:${time.meridian}`, { replace: true });
   };
+  const handleClickTime1 = (url) => {
+    console.log("workss");
+    console.log(`/strike/${url}/`);
+    navigate(`/stirkebytimebank/${time.hour}:${time.minute}:${time.meridian}`, { replace: true });
+  };
   console.log(theArray, "theArraytheArraytheArray");
   console.log(time, "timetime");
   return (
@@ -288,7 +293,7 @@ function SensiBullMain() {
                         size="medium"
                         type="submit"
                         variant="contained"
-                        onClick={() => handleClickTime(ele)}
+                        onClick={() => handleClickTime1(ele)}
                         endIcon={
                           <Iconify icon={"eva:arrow-ios-forward-fill"} />
                         }
