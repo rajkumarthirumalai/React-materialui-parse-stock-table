@@ -42,6 +42,27 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: "center",
   color: theme.palette.text.secondary,
 }));
+const Item1 = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#98bf64',
+  ...theme.typography.body2,
+  textAlign: 'center',
+  fontSize: 10,
+  color: theme.palette.text.secondary,
+}));
+const Item2 = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#63c5da',
+  ...theme.typography.body2,
+  textAlign: 'center',
+  fontSize: 10,
+  color: theme.palette.text.secondary,
+}));
+const Item3 = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  textAlign: 'center',
+  fontSize: 8,
+  color: theme.palette.text.secondary,
+}));
 
 function SensilbleDataSortedByTime() {
   const navigate = useNavigate();
@@ -50,7 +71,7 @@ function SensilbleDataSortedByTime() {
   const [theArrayOfvalues, setTheArrayOfvalues] = useState([]);
   const [selectedTime, setSelectedTime] = useState(new Date()); // set initial time value here
   const [time, setTime] = useState({
-    hour: "01",
+    hour: "03",
     minute: "00",
     meridian: "am",
   });
@@ -69,7 +90,10 @@ function SensilbleDataSortedByTime() {
     tosetTime((prevTime) => ({ ...prevTime, [name]: value }));
   };
   useEffect(() => {
+
     ParseCall();
+
+
   }, []);
   const groupBy = (items, key) =>
     items.reduce(
@@ -85,29 +109,34 @@ function SensilbleDataSortedByTime() {
   let n2 = [];
   let newArr = [];
   async function ParseCall() {
-    for (let i = 0; i < 30; i++) {
-      (async () => {
-        let timeIs = `${dump.time}`.split(":");
-        var hours = timeIs[0]; // Replace with the desired hour value (1-12)
-        var minutes = timeIs[1] + i; // Replace with the desired minute value (0-59)
-        var meridian = timeIs[2];
-        console.log(meridian);
-        if (meridian === "pm" && hours !== 12) {
-          hours = parseInt(hours) + 12;
-        }
-        console.log(parseInt(hours), "this is hours");
-        const now = new Date();
-        now.setMonth(3);
-        now.setMinutes(minutes);
-        now.setHours(parseInt(hours));
-        now.setDate(28);
 
+    let timeIs = `${dump.time}`.split(":");
+    var hours = parseInt(timeIs[0]); // Replace with the desired hour value (1-12)
+    var minutes = parseInt(timeIs[1]); // Replace with the desired minute value (0-59)
+    var meridian = timeIs[2];
+    console.log(meridian);
+    if (meridian === "pm" && hours !== 12) {
+      hours = hours + 12;
+    }
+    console.log(hours, "this is hours");
+    console.log(minutes, "this is mins");
+
+    const now = new Date();
+    now.setMonth(6);
+    now.setMinutes(minutes);
+    now.setHours(hours);
+    now.setDate(14);
+
+    for (let i = 0; i < 100; i++) {
+      (async () => {
+
+        let j = i * 5;
         var minuteStart = new Date(
           now.getFullYear(),
           now.getMonth(),
           now.getDate(),
           now.getHours(),
-          now.getMinutes(),
+          now.getMinutes() + j,
           0
         );
         var minuteEnd = new Date(
@@ -115,7 +144,7 @@ function SensilbleDataSortedByTime() {
           now.getMonth(),
           now.getDate(),
           now.getHours(),
-          now.getMinutes() + 1,
+          now.getMinutes() + j + 1,
           0
         );
         console.log(minuteStart, minuteEnd);
@@ -149,9 +178,9 @@ function SensilbleDataSortedByTime() {
               pp.CallTheta = e.get("CallTheta");
               pp.CallDelta = e.get("CallDelta");
               pp.CallOL = e.get("CallOL");
-              pp.CallLTP = e.get("CallLTP");
+              pp.CallLTP = parseFloat(e.get("CallLTP"));
               pp.Strike = e.get("Strike");
-              pp.PutGamma = e.get("PutGamma");
+              pp.PutGamma = parseFloat(e.get("PutGamma"));
               pp.PutVega = e.get("PutVega");
               pp.PutTheta = e.get("PutTheta");
               pp.PutDelta = e.get("PutDelta");
@@ -167,24 +196,32 @@ function SensilbleDataSortedByTime() {
             newArr = [];
             console.log(n2, "heerree bOOII");
           })
-          .catch((error) => {});
+          .catch((error) => { });
       })();
     }
+
+
+
     setTimeout(() => {
       setltpArray(n2);
-    }, 2000);
-    console.log(theArray, "thisss");
+    }, 20000);
+
+
+    //console.log(theArray, "thisss");  
   }
+
+
+
   const FindData = () => {
     console.log("work aguthu");
     let t1 = time
     let t2 = totime
     // Get the current date
     const currentDate = new Date();
-    if(t1.meridian == "pm"){
+    if (t1.meridian == "pm") {
       t1.hour = parseInt(t1.hour) + 12
     }
-    if(t2.meridian == "pm"){
+    if (t2.meridian == "pm") {
       t2.hour = parseInt(t2.hour) + 12
     }
     console.log(t1, t2, "works");
@@ -205,7 +242,7 @@ function SensilbleDataSortedByTime() {
     console.log(
       `The time difference between ${time1} and ${time2} is ${minutesDiff} minutes.`
     );
-      
+
     t1 = time
     t2 = totime
   };
@@ -243,7 +280,7 @@ function SensilbleDataSortedByTime() {
                   onChange={handleTimeChange}
                   fullWidth
                 >
-                  {Array.from({ length: 12 }, (_, i) => i + 1).map((num) => (
+                  {Array.from({ length: 30 }, (_, i) => i + 1).map((num) => (
                     <MenuItem key={num} value={num < 10 ? `0${num}` : `${num}`}>
                       {num < 10 ? `0${num}` : `${num}`}
                     </MenuItem>
@@ -396,107 +433,44 @@ function SensilbleDataSortedByTime() {
           <Table stickyHeader sx={{ minWidth: 650 }}>
             <TableHead>
               <TableRow>
-                <TableCell>time</TableCell>
-                <TableCell>SpotValue</TableCell>
-                <TableCell>IndiaVix</TableCell>
+                <TableCell sx={{ padding: "2px", margin: "0px" }}>time</TableCell>
+                <TableCell sx={{ padding: "2px", margin: "0px" }}>SpotValue</TableCell>
+                <TableCell sx={{ padding: "2px", margin: "0px" }}>IndiaVix</TableCell>
+
                 <TableCell align="center">
                   -200
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      callLtp
-                    </Grid>
-                    <Grid item xs={6}>
-                      putLtp
-                    </Grid>
-                  </Grid>
+
                 </TableCell>
                 <TableCell align="center">
                   -150
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      callLtp
-                    </Grid>
-                    <Grid item xs={6}>
-                      putLtp
-                    </Grid>
-                  </Grid>
+
                 </TableCell>
                 <TableCell align="center">
                   -100
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      callLtp
-                    </Grid>
-                    <Grid item xs={6}>
-                      putLtp
-                    </Grid>
-                  </Grid>
+
                 </TableCell>
                 <TableCell align="center">
                   -50
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      callLtp
-                    </Grid>
-                    <Grid item xs={6}>
-                      putLtp
-                    </Grid>
-                  </Grid>
+
                 </TableCell>
                 <TableCell align="center">
                   0
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      callLtp
-                    </Grid>
-                    <Grid item xs={6}>
-                      putLtp
-                    </Grid>
-                  </Grid>
                 </TableCell>
                 <TableCell align="center">
                   50
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      callLtp
-                    </Grid>
-                    <Grid item xs={6}>
-                      putLtp
-                    </Grid>
-                  </Grid>
+
                 </TableCell>
                 <TableCell align="center">
                   100
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      callLtp
-                    </Grid>
-                    <Grid item xs={6}>
-                      putLtp
-                    </Grid>
-                  </Grid>
+
                 </TableCell>
                 <TableCell align="center">
                   150
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      callLtp
-                    </Grid>
-                    <Grid item xs={6}>
-                      putLtp
-                    </Grid>
-                  </Grid>
+
                 </TableCell>
                 <TableCell align="center">
                   200
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      callLtp
-                    </Grid>
-                    <Grid item xs={6}>
-                      putLtp
-                    </Grid>
-                  </Grid>
+
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -509,97 +483,581 @@ function SensilbleDataSortedByTime() {
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
-                    <TableCell>{row[0].createdAt.toLocaleString()}</TableCell>
-                    <TableCell>{row[0].spotValue}</TableCell>
-                    <TableCell>{JSON.parse(row[0].indiaVix)}</TableCell>
+                    <TableCell sx={{ padding: "2px", margin: "0px" }}>{row[0].createdAt.toLocaleString()}</TableCell>
+                    <TableCell sx={{ padding: "2px", margin: "0px" }}>{row[0].spotValue}</TableCell>
+                    <TableCell sx={{ padding: "2px", margin: "0px" }}>{JSON.parse(row[0].indiaVix)}</TableCell>
+
 
                     <TableCell align="right">
-                      <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                          {row[0].CallLTP}
+                      <Grid container rowSpacing={0.1} columnSpacing={{ xs: 0, sm: 0, md: 0 }}>
+
+                        <Grid item xs={12}>
+                          <Item>{row[0].Strike} </Item>
                         </Grid>
-                        <Grid item xs={6}>
-                          {row[0].PutGamma}
+
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item1>{row[0].CallDelta}</Item1>
                         </Grid>
-                      </Grid>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                          {row[1].CallLTP}
+                        <Grid item xs={3}>
+                          <Item3>Gamma</Item3>
+                          <Item1>{row[0].CallGamma}</Item1>
                         </Grid>
-                        <Grid item xs={6}>
-                          {row[1].PutGamma}
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item1>{row[0].CallTheta}</Item1>
                         </Grid>
-                      </Grid>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                          {row[2].CallLTP}
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item1>{row[0].CallVega}</Item1>
                         </Grid>
-                        <Grid item xs={6}>
-                          {row[2].PutGamma}
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item1>{row[0].CallLTP}</Item1>
                         </Grid>
-                      </Grid>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                          {row[3].CallLTP}
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item1>{row[0].CallOL}</Item1>
                         </Grid>
-                        <Grid item xs={6}>
-                          {row[3].PutGamma}
+
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item2>{row[0].PutGamma}</Item2>
                         </Grid>
-                      </Grid>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                          {row[4].CallLTP}
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item2>{row[0].PutVega}</Item2>
                         </Grid>
-                        <Grid item xs={6}>
-                          {row[4].PutGamma}
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item2>{row[0].PutTheta}</Item2>
                         </Grid>
-                      </Grid>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                          {row[5].CallLTP}
+                        <Grid item xs={3}>
+                         <Item3>Gamma</Item3>
+                          <Item2>{row[0].PutLTP}</Item2>
                         </Grid>
-                        <Grid item xs={6}>
-                          {row[5].PutGamma}
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item2>{row[0].PutTheta}</Item2>
                         </Grid>
-                      </Grid>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                          {row[6].CallLTP}
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item2>{row[0].PutOL}</Item2>
                         </Grid>
-                        <Grid item xs={6}>
-                          {row[6].PutGamma}
+                        <Grid item xs={3}>
+                          <Item3>LTP together</Item3>
+                          <Item1>{row[0].CallLTP + row[0].PutGamma}</Item1>
                         </Grid>
-                      </Grid>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                          {row[7].CallLTP}
+                        <Grid item xs={3}>
+                          <Item3>Actual Put</Item3>
+                          <Item1>{(row[0].CallLTP + row[0].PutGamma)/2-(row[0].spotValue-row[0].Strike)}</Item1>
                         </Grid>
-                        <Grid item xs={6}>
-                          {row[7].PutGamma}
+                        <Grid item xs={3}>
+                          <Item3>Actual call</Item3>
+                          <Item1>{row[0].CallLTP + row[0].PutGamma}</Item1>
                         </Grid>
                       </Grid>
                     </TableCell>
                     <TableCell align="right">
-                      <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                          {row[8].CallLTP}
+                      <Grid container rowSpacing={0.1} columnSpacing={{ xs: 0, sm: 0, md: 0 }}>
+
+                      <Grid item xs={12}>
+                          <Item>{row[1].Strike} </Item>
                         </Grid>
-                        <Grid item xs={6}>
-                          {row[8].PutGamma}
+
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item1>{row[1].CallDelta}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Gamma</Item3>
+                          <Item1>{row[1].CallGamma}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item1>{row[1].CallTheta}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item1>{row[1].CallVega}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item1>{row[1].CallLTP}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item1>{row[1].CallOL}</Item1>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item2>{row[1].PutGamma}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item2>{row[1].PutVega}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item2>{row[1].PutTheta}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                         <Item3>Gamma</Item3>
+                          <Item2>{row[1].PutLTP}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item2>{row[1].PutTheta}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item2>{row[1].PutOL}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>LTP together</Item3>
+                          <Item1>{row[1].CallLTP + row[1].PutGamma}</Item1>
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Grid container rowSpacing={0.1} columnSpacing={{ xs: 0, sm: 0, md: 0 }}>
+
+                      <Grid item xs={12}>
+                          <Item>{row[2].Strike} </Item>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item1>{row[2].CallDelta}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Gamma</Item3>
+                          <Item1>{row[2].CallGamma}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item1>{row[2].CallTheta}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item1>{row[2].CallVega}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item1>{row[2].CallLTP}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item1>{row[2].CallOL}</Item1>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item2>{row[2].PutGamma}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item2>{row[2].PutVega}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item2>{row[2].PutTheta}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                         <Item3>Gamma</Item3>
+                          <Item2>{row[2].PutLTP}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item2>{row[2].PutTheta}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item2>{row[2].PutOL}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>LTP together</Item3>
+                          <Item1>{row[2].CallLTP + row[2].PutGamma}</Item1>
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Grid container rowSpacing={0.1} columnSpacing={{ xs: 0, sm: 0, md: 0 }}>
+
+                      <Grid item xs={12}>
+                          <Item>{row[3].Strike} </Item>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item1>{row[3].CallDelta}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Gamma</Item3>
+                          <Item1>{row[3].CallGamma}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item1>{row[3].CallTheta}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item1>{row[3].CallVega}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item1>{row[3].CallLTP}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item1>{row[3].CallOL}</Item1>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item2>{row[3].PutGamma}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item2>{row[3].PutVega}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item2>{row[3].PutTheta}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                         <Item3>Gamma</Item3>
+                          <Item2>{row[3].PutLTP}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item2>{row[3].PutTheta}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item2>{row[3].PutOL}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>LTP together</Item3>
+                          <Item1>{row[3].CallLTP + row[3].PutGamma}</Item1>
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Grid container rowSpacing={0.1} columnSpacing={{ xs: 0, sm: 0, md: 0 }}>
+
+                      <Grid item xs={12}>
+                          <Item>{row[4].Strike} </Item>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item1>{row[4].CallDelta}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Gamma</Item3>
+                          <Item1>{row[4].CallGamma}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item1>{row[4].CallTheta}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item1>{row[4].CallVega}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item1>{row[4].CallLTP}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item1>{row[4].CallOL}</Item1>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item2>{row[4].PutGamma}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item2>{row[4].PutVega}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item2>{row[4].PutTheta}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                         <Item3>Gamma</Item3>
+                          <Item2>{row[4].PutLTP}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item2>{row[4].PutTheta}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item2>{row[4].PutOL}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>LTP together</Item3>
+                          <Item1>{row[4].CallLTP + row[4].PutGamma}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Actual Put</Item3>
+                          <Item1>{((row[4].CallLTP + row[4].PutGamma)/2-(row[4].spotValue-row[4].Strike))}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Actual call</Item3>
+                          <Item1>{((row[4].CallLTP + row[4].PutGamma)/2-(row[4].Strike-row[4].spotValue))}</Item1>
+                        </Grid>
+                        
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Grid container rowSpacing={0.1} columnSpacing={{ xs: 0, sm: 0, md: 0 }}>
+
+                      <Grid item xs={12}>
+                          <Item>{row[5].Strike} </Item>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item1>{row[5].CallDelta}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Gamma</Item3>
+                          <Item1>{row[5].CallGamma}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item1>{row[5].CallTheta}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item1>{row[5].CallVega}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item1>{row[5].CallLTP}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item1>{row[5].CallOL}</Item1>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item2>{row[5].PutGamma}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item2>{row[5].PutVega}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item2>{row[5].PutTheta}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                         <Item3>Gamma</Item3>
+                          <Item2>{row[5].PutLTP}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item2>{row[5].PutTheta}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item2>{row[5].PutOL}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>LTP together</Item3>
+                          <Item1>{row[5].CallLTP + row[5].PutGamma}</Item1>
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Grid container rowSpacing={0.1} columnSpacing={{ xs: 0, sm: 0, md: 0 }}>
+
+                      <Grid item xs={12}>
+                          <Item>{row[6].Strike} </Item>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item1>{row[6].CallDelta}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Gamma</Item3>
+                          <Item1>{row[6].CallGamma}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item1>{row[6].CallTheta}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item1>{row[6].CallVega}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item1>{row[6].CallLTP}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item1>{row[6].CallOL}</Item1>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item2>{row[6].PutGamma}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item2>{row[6].PutVega}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item2>{row[6].PutTheta}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                         <Item3>Gamma</Item3>
+                          <Item2>{row[6].PutLTP}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item2>{row[6].PutTheta}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item2>{row[6].PutOL}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>LTP together</Item3>
+                          <Item1>{row[6].CallLTP + row[6].PutGamma}</Item1>
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Grid container rowSpacing={0.1} columnSpacing={{ xs: 0, sm: 0, md: 0 }}>
+                      <Grid item xs={12}>
+                          <Item>{row[7].Strike} </Item>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item1>{row[7].CallDelta}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Gamma</Item3>
+                          <Item1>{row[7].CallGamma}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item1>{row[7].CallTheta}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item1>{row[7].CallVega}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item1>{row[7].CallLTP}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item1>{row[7].CallOL}</Item1>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item2>{row[7].PutGamma}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item2>{row[7].PutVega}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item2>{row[7].PutTheta}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                         <Item3>Gamma</Item3>
+                          <Item2>{row[7].PutLTP}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item2>{row[7].PutTheta}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item2>{row[7].PutOL}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>LTP together</Item3>
+                          <Item1>{row[7].CallLTP + row[7].PutGamma}</Item1>
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Grid container rowSpacing={0.1} columnSpacing={{ xs: 0, sm: 0, md: 0 }}>
+                      <Grid item xs={12}>
+                          <Item>{row[8].Strike} </Item>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item1>{row[8].CallDelta}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Gamma</Item3>
+                          <Item1>{row[8].CallGamma}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item1>{row[8].CallTheta}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item1>{row[8].CallVega}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item1>{row[8].CallLTP}</Item1>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item1>{row[8].CallOL}</Item1>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                          <Item3>LTP</Item3>
+                          <Item2>{row[8].PutGamma}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>OI</Item3>
+                          <Item2>{row[8].PutVega}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Delta</Item3>
+                          <Item2>{row[8].PutTheta}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                         <Item3>Gamma</Item3>
+                          <Item2>{row[8].PutLTP}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Theta</Item3>
+                          <Item2>{row[8].PutTheta}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>Vega</Item3>
+                          <Item2>{row[8].PutOL}</Item2>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Item3>LTP together</Item3>
+                          <Item1>{row[8].CallLTP + row[8].PutGamma}</Item1>
                         </Grid>
                       </Grid>
                     </TableCell>
@@ -615,4 +1073,3 @@ function SensilbleDataSortedByTime() {
 }
 
 export default SensilbleDataSortedByTime;
-  

@@ -19,6 +19,7 @@ import Stylingu from './pages/Stylingu';
 import SensileAllData from './pages/SensileAllData';
 import SensilbleDataSortedByTime from './pages/SensilbleDataSortedByTime';
 import SensilbleSortedbyBank from './pages/sensibleSortedbyBank';
+import SensilbleDataSortedBystrangles from './pages/SensilbleDataSortedBystrangles';
 // Your Parse initialization configuration goes here
 const PARSE_APPLICATION_ID = '123';
 // const PARSE_HOST_URL = 'http://localhost:1337/parse';
@@ -83,7 +84,14 @@ export default function App() {
                 </Protected>
               }
             />
-            
+             <Route
+              path="/stirkebystrangles/:time"
+              element={
+                <Protected isSignedIn={isSignedIn}>
+                  <SensilbleDataSortedBystrangles/>
+                </Protected>
+              }
+            />
 
             <Route
               path="/dashboard"
